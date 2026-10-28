@@ -1,0 +1,840 @@
+# MASTER PROMPT — GAME EDUKASI KARTU OPOSISI 2D ANIMASI INTERAKTIF
+
+## 1. PERAN AI CODING AGENT
+
+Bertindaklah sebagai Senior Frontend Developer, Game Developer, UI/UX Designer, dan Animation Specialist yang berpengalaman membangun media pembelajaran interaktif berbasis web untuk siswa sekolah dasar.
+
+Tugasmu adalah membangun aplikasi web berupa **Game Edukasi Kartu Oposisi 2D dengan Animasi Interaktif dan Sistem Adu Cepat Dua Peserta**.
+
+Aplikasi harus benar-benar dapat dimainkan, bukan hanya berupa mockup, desain statis, atau demonstrasi animasi.
+
+Prioritaskan:
+1. Mekanisme permainan yang benar dan konsisten.
+2. Interaksi rolling kartu yang dikendalikan peserta.
+3. Sistem adu cepat yang adil.
+4. Visual 2D yang menarik dengan animasi penuh.
+5. Antarmuka yang mudah digunakan anak sekolah dasar.
+6. Responsivitas dan performa yang baik.
+
+Semua teks antarmuka menggunakan bahasa Indonesia. Kosakata yang dipelajari dapat berupa kata bahasa Indonesia beserta ilustrasi yang membantu siswa memahami maknanya.
+
+---
+
+## 2. KONSEP DAN TUJUAN PERMAINAN
+
+Game ini merupakan media pembelajaran untuk mengenalkan kata oposisi atau antonim, yaitu pasangan kata yang memiliki makna berlawanan.
+
+Contoh pasangan kata:
+- BESAR ↔ KECIL
+- TINGGI ↔ RENDAH
+- PANJANG ↔ PENDEK
+- PANAS ↔ DINGIN
+- TERANG ↔ GELAP
+- CEPAT ↔ LAMBAT
+- BERAT ↔ RINGAN
+- JAUH ↔ DEKAT
+- TEBAL ↔ TIPIS
+- KERAS ↔ LUNAK
+- RAJIN ↔ MALAS
+- BERSIH ↔ KOTOR
+- RAMAI ↔ SEPI
+- NAIK ↔ TURUN
+- BUKA ↔ TUTUP
+
+Permainan dimainkan oleh dua peserta secara bersamaan.
+
+Di tengah layar terdapat satu kartu utama. Di sebelah kiri terdapat tumpukan kartu Peserta 1, sedangkan di sebelah kanan terdapat tumpukan kartu Peserta 2.
+
+Kedua peserta harus mencari kartu yang merupakan oposisi dari kartu utama dengan cara me-roll atau menggulir tumpukan kartu mereka sendiri.
+
+**Prinsip utama permainan: peserta mengendalikan rolling secara manual. Sistem tidak otomatis menggulir kartu untuk mereka.**
+
+Peserta yang paling cepat menemukan, memilih, dan mengonfirmasi kartu dengan jawaban benar memenangkan ronde tersebut.
+
+---
+
+## 3. PEMBAGIAN AREA PERMAINAN
+
+Buat satu layar permainan utama dengan tiga area yang terlihat jelas.
+
+### A. Area Kiri — Peserta 1
+
+Area ini khusus untuk Peserta 1 dan berisi:
+- Nama peserta.
+- Avatar atau ikon pemain.
+- Skor saat ini.
+- Tumpukan kartu yang dapat di-roll.
+- Kartu aktif yang sedang ditampilkan.
+- Indikator jumlah kartu atau posisi deck.
+- Tombol pilih kartu.
+- Tombol pasangkan ke kartu utama.
+- Tombol batalkan pilihan.
+- Indikator status permainan.
+
+### B. Area Tengah — Kartu Utama
+
+Area ini menjadi fokus visual utama permainan.
+
+Berisi:
+- Kartu utama yang menampilkan kata yang harus dicari opositenya.
+- Ilustrasi yang mewakili kata tersebut.
+- Instruksi singkat, misalnya “Temukan lawan katanya!”
+- Indikator ronde.
+- Timer ronde.
+- Status permainan.
+- Umpan balik hasil jawaban.
+
+Contoh:
+
+Kartu utama menampilkan:
+
+**BESAR**
+
+Dengan ilustrasi benda berukuran besar.
+
+Peserta harus mencari kartu KECIL pada tumpukan kartu masing-masing.
+
+Kartu utama harus tetap terlihat selama peserta melakukan rolling agar mereka tidak lupa kata yang harus dicari.
+
+### C. Area Kanan — Peserta 2
+
+Area ini khusus untuk Peserta 2 dan memiliki komponen yang sama dengan Peserta 1.
+
+Peserta 2 harus memiliki tumpukan kartu sendiri yang dapat di-roll secara independen.
+
+Perubahan pada deck Peserta 1 tidak boleh mengubah deck Peserta 2.
+
+### D. Tata Letak Referensi
+
+```text
+┌──────────────────────────────────────────────────────────────┐
+│ LOGO GAME       KARTU OPOSISI          RONDE 01/10     ⏸     │
+├──────────────────────┬──────────────────┬────────────────────┤
+│                      │                  │                    │
+│     PESERTA 1        │   KARTU UTAMA    │     PESERTA 2      │
+│                      │                  │                    │
+│   Skor: 000          │                  │       Skor: 000    │
+│                      │                  │                    │
+│  ┌──────────────┐    │  ┌────────────┐  │   ┌──────────────┐ │
+│  │              │    │  │            │  │   │              │ │
+│  │  TUMPUKAN    │    │  │   BESAR    │  │   │  TUMPUKAN    │ │
+│  │    KARTU     │    │  │            │  │   │    KARTU     │ │
+│  │              │    │  │  ILUSTRASI │  │   │              │ │
+│  └──────────────┘    │  └────────────┘  │   └──────────────┘ │
+│                      │                  │                    │
+│    [  ROLL  ↑↓ ]     │ CARI OPOSITENYA  │    [  ROLL  ↑↓ ]  │
+│                      │                  │                    │
+│  [ PILIH KARTU ]     │                  │   [ PILIH KARTU ]  │
+│  [ PASANGKAN   ]     │                  │   [ PASANGKAN   ]  │
+│                      │                  │                    │
+├──────────────────────┴──────────────────┴────────────────────┤
+│           PETUNJUK • STATUS PERMAINAN • WAKTU                 │
+└──────────────────────────────────────────────────────────────┘
+```
+
+Gunakan diagram ini sebagai panduan struktur, bukan desain visual final yang kaku.
+
+Buat tata letak yang lebih modern, seimbang, dan menarik dengan hierarki visual yang jelas. Pada desktop atau proyektor, pertahankan tiga area dalam satu baris.
+
+---
+
+## 4. MEKANISME UTAMA: ROLLING TUMPUKAN KARTU
+
+Fitur ini merupakan inti dari seluruh aplikasi dan harus diimplementasikan dengan benar.
+
+### 4.1 Konsep Rolling
+
+Setiap peserta memiliki deck berisi beberapa kartu kata.
+
+Deck tersebut ditampilkan sebagai tumpukan kartu 2D. Peserta dapat menggulir tumpukan untuk menelusuri kartu satu per satu sampai menemukan jawaban yang dicari.
+
+Rolling dapat dilakukan menggunakan:
+- Scroll mouse.
+- Scroll touchpad.
+- Swipe ke atas atau ke bawah pada layar sentuh.
+- Tombol panah atas dan bawah.
+- Tombol kontrol kartu yang disediakan pada layar.
+
+Semua metode tersebut harus mengendalikan deck peserta yang bersangkutan, bukan mengendalikan kedua deck sekaligus.
+
+### 4.2 Perilaku Kartu Saat Rolling
+
+Saat peserta menggulir deck:
+1. Kartu aktif bergerak mengikuti arah input.
+2. Kartu berikutnya masuk ke area tampilan.
+3. Kartu sebelumnya bergerak keluar.
+4. Transisi menggunakan animasi slide, flip, atau perpindahan bertingkat.
+5. Ilustrasi dan kata ikut berubah sesuai kartu aktif.
+6. Tumpukan di belakang kartu aktif tetap terlihat untuk memberikan kesan beberapa kartu yang tersusun.
+7. Bayangan dan pergeseran posisi memperkuat visual tumpukan kartu 2D.
+8. Gerakan berhenti pada satu kartu yang utuh dan mudah dibaca.
+
+Gunakan animasi dengan durasi singkat dan easing yang halus. Hindari pergantian kartu yang terlalu lambat sehingga permainan terasa membosankan.
+
+**Penting:** rolling harus mengikuti tindakan peserta. Jangan membuat deck terus berganti otomatis berdasarkan timer atau animasi yang berjalan sendiri.
+
+### 4.3 Kartu Aktif
+
+Pada setiap waktu, hanya ada satu kartu aktif yang menjadi fokus utama di setiap area peserta.
+
+Kartu aktif harus:
+- Terlihat paling jelas.
+- Menampilkan kata dan ilustrasi.
+- Memiliki indikator posisi dalam deck.
+- Dapat dipilih ketika fase permainan mengizinkan.
+- Memiliki status yang jelas saat dipilih.
+- Tidak berubah menjadi kartu lain tanpa tindakan rolling dari peserta.
+
+Kartu yang sedang tidak aktif dapat terlihat sebagai lapisan tumpukan di belakangnya, tetapi tidak boleh dapat dipilih secara tidak sengaja.
+
+### 4.4 Posisi Deck dan Pengacakan
+
+Saat ronde dimulai, sistem menyiapkan urutan kartu masing-masing peserta secara independen.
+
+Contoh:
+- Deck Peserta 1: PANJANG → TINGGI → KECIL → CEPAT → BERAT.
+- Deck Peserta 2: CEPAT → BERAT → PANJANG → KECIL → TINGGI.
+
+Urutan tersebut hanya ilustrasi. Sistem harus melakukan pengacakan pada setiap ronde.
+
+Ketentuan:
+- Kedua deck memiliki kartu jawaban benar yang sesuai dengan kartu utama.
+- Posisi jawaban benar diacak pada setiap ronde.
+- Kartu pengecoh juga diacak.
+- Hindari urutan kartu yang selalu sama.
+- Jangan mengubah urutan deck secara acak ketika peserta sedang menggulirnya.
+- Indeks kartu aktif harus selalu sesuai dengan kartu yang benar-benar ditampilkan.
+- Jika peserta mencapai akhir deck, sediakan mekanisme kembali ke awal deck atau tampilkan indikator deck telah habis.
+- Jangan memberikan penanda khusus yang membocorkan kartu jawaban benar.
+
+### 4.5 Pemilihan Kartu
+
+Ketika peserta menemukan kartu yang dianggap benar, peserta menekan tombol **PILIH KARTU** atau mengetuk kartu aktif.
+
+Setelah dipilih:
+- Kartu terangkat sedikit.
+- Muncul outline atau efek cahaya.
+- Tombol berubah menjadi status terpilih.
+- Rolling pada deck tersebut dihentikan sementara.
+- Tampilkan tombol PASANGKAN KE KARTU UTAMA.
+- Tampilkan tombol BATALKAN PILIHAN.
+
+Peserta masih dapat membatalkan pilihannya sebelum mengirim jawaban.
+
+Jika dibatalkan:
+- Kartu kembali ke posisi semula.
+- Rolling dapat digunakan kembali.
+- Peserta dapat mencari kartu lainnya selama waktu ronde belum berakhir.
+
+Jangan langsung memvalidasi jawaban saat kartu dipilih.
+
+### 4.6 Memasangkan Kartu
+
+Setelah memilih kartu, peserta menekan tombol **PASANGKAN KE KARTU UTAMA**.
+
+Sistem kemudian:
+1. Mengunci pilihan peserta tersebut.
+2. Mencatat waktu konfirmasi.
+3. Memindahkan kartu pilihan menuju area tengah menggunakan animasi 2D.
+4. Memvalidasi pasangan kata.
+5. Menentukan apakah jawaban benar atau salah.
+6. Menjalankan aturan adu cepat.
+7. Menampilkan hasil ronde.
+
+Sediakan drag-and-drop sebagai alternatif: peserta dapat menyeret kartu aktif ke area kartu utama untuk mengirim jawaban.
+
+Klik atau sentuhan pertama hanya memilih kartu. Jawaban baru dikirim ketika peserta menekan tombol Pasangkan atau menyelesaikan drag-and-drop.
+
+---
+
+## 5. SISTEM ADU CEPAT DUA PESERTA
+
+### 5.1 Awal Ronde
+
+Setiap ronde dimulai dengan hitung mundur:
+
+**3 → 2 → 1 → MULAI!**
+
+Gunakan angka besar dengan animasi scale, fade, dan bounce.
+
+Setelah hitung mundur selesai:
+- Kartu utama muncul.
+- Kedua peserta dapat mulai menggulir deck mereka.
+- Timer ronde dimulai.
+- Kedua peserta mencari oposisi secara bersamaan.
+
+### 5.2 Aturan Adu Cepat
+
+Kedua peserta:
+- Melihat kartu utama yang sama.
+- Mengendalikan deck masing-masing.
+- Dapat menggulir dengan kecepatan masing-masing.
+- Dapat memilih kartu secara independen.
+- Harus mengonfirmasi jawaban untuk memperoleh poin.
+
+Aturan penentuan pemenang:
+1. Jawaban benar pertama yang diterima secara sah memenangkan ronde.
+2. Peserta yang menjawab salah tidak mendapatkan poin.
+3. Jika peserta pertama salah, peserta kedua masih boleh menjawab.
+4. Peserta pertama dapat mencoba kembali jika opsi percobaan ulang diaktifkan.
+5. Jika kedua peserta mengirim jawaban hampir bersamaan, sistem harus memprosesnya secara konsisten berdasarkan urutan penerimaan.
+6. Hanya satu jawaban benar yang boleh memenangkan satu ronde.
+7. Jika tidak ada jawaban benar sampai waktu habis, ronde berakhir tanpa poin.
+8. Setelah ronde selesai, semua input deck dan pengiriman jawaban dikunci.
+9. Hasil ronde tidak boleh berubah karena input yang datang terlambat.
+
+### 5.3 Contoh Skenario
+
+Kartu utama: **BESAR**
+
+Peserta 1 mulai menggulir deck:
+PANJANG → TINGGI → KECIL.
+
+Peserta 2 mulai menggulir deck:
+CEPAT → BERAT → PANJANG → KECIL.
+
+Peserta 1 menemukan KECIL lebih dahulu dan menekan PILIH KARTU, lalu PASANGKAN KE KARTU UTAMA.
+
+Jika jawabannya benar dan konfirmasinya diterima lebih dahulu:
+- Kartu KECIL bergerak ke tengah.
+- Kartu KECIL dipasangkan dengan BESAR.
+- Muncul animasi keberhasilan.
+- Peserta 1 mendapat 10 poin.
+- Peserta 2 tidak memperoleh poin pada ronde tersebut.
+- Kedua deck dikunci sampai ronde berikutnya.
+
+Jika Peserta 1 mengirim jawaban yang salah, Peserta 2 tetap boleh melanjutkan pencarian dan menjawab selama ronde belum selesai.
+
+---
+
+## 6. SISTEM SKOR DAN PROGRES
+
+Sediakan:
+- Skor Peserta 1.
+- Skor Peserta 2.
+- Nomor ronde.
+- Jumlah total ronde.
+- Jumlah kemenangan setiap peserta.
+- Jumlah jawaban benar.
+- Jumlah jawaban salah.
+- Waktu respons, jika diperlukan.
+
+Nilai awal:
+- Jawaban benar: 10 poin.
+- Jawaban salah: 0 poin.
+- Tidak menjawab sampai waktu habis: 0 poin.
+
+Skor harus:
+- Bertambah satu kali untuk setiap ronde yang dimenangkan.
+- Tidak bertambah jika peserta hanya memilih kartu.
+- Tidak bertambah jika peserta menggulir deck.
+- Tidak terduplikasi ketika tombol diklik berulang.
+- Direset saat permainan baru dimulai.
+
+Gunakan animasi angka saat skor berubah agar siswa dapat melihat perkembangan permainan.
+
+---
+
+## 7. BANK KATA DAN VALIDASI OPOSISI
+
+Semua kartu harus berasal dari bank data yang terstruktur.
+
+Contoh bank kata:
+
+| Kata | Oposisi |
+|---|---|
+| BESAR | KECIL |
+| TINGGI | RENDAH |
+| PANJANG | PENDEK |
+| PANAS | DINGIN |
+| TERANG | GELAP |
+| CEPAT | LAMBAT |
+| BERAT | RINGAN |
+| JAUH | DEKAT |
+| TEBAL | TIPIS |
+| KERAS | LUNAK |
+| RAJIN | MALAS |
+| BERSIH | KOTOR |
+| RAMAI | SEPI |
+| NAIK | TURUN |
+| BUKA | TUTUP |
+
+Gunakan pasangan yang sesuai dengan konteks pembelajaran siswa SD.
+
+Contoh struktur TypeScript:
+
+```ts
+type OppositeCard = {
+  id: string;
+  word: string;
+  oppositeId: string;
+  image: string;
+  difficulty: "mudah" | "sedang" | "sulit";
+  category: string;
+};
+```
+
+Ketentuan:
+- Validasi jawaban menggunakan ID pasangan, bukan hanya membandingkan tampilan teks.
+- Pasangan harus valid dari kedua arah.
+- Setiap kartu utama harus memiliki oposisi yang tersedia.
+- Setiap deck harus memuat kartu jawaban benar.
+- Kartu pengecoh harus valid dan relevan.
+- Jangan menggunakan dua kata yang bukan oposisi sebagai pasangan benar.
+- Jangan mengulangi soal berturut-turut jika masih tersedia soal lain.
+- Data kata dan ilustrasi harus mudah ditambah atau diubah tanpa mengubah komponen permainan.
+
+---
+
+## 8. DESAIN VISUAL 2D FULL ANIMATION
+
+### 8.1 Gaya Visual
+
+Gunakan gaya permainan edukasi 2D modern dengan ilustrasi kartun yang ceria, warna harmonis, bentuk membulat, dan komposisi bersih.
+
+Hasil akhir harus terlihat seperti game edukasi profesional, bukan formulir web biasa.
+
+Gunakan:
+- Background berlapis.
+- Gradien yang lembut.
+- Kartu dengan sudut membulat.
+- Bayangan halus.
+- Outline yang jelas.
+- Ilustrasi kartun 2D berkualitas baik.
+- Efek cahaya dan partikel yang terkontrol.
+- Tipografi besar dan mudah dibaca.
+- Ikon yang konsisten.
+
+Jangan menggunakan objek 3D, Three.js, React Three Fiber, atau WebGL. Kesan kedalaman cukup dibuat dengan teknik visual 2D seperti transformasi, bayangan, overlap, dan perspektif CSS yang ringan.
+
+### 8.2 Animasi Kartu
+
+Buat animasi untuk:
+- Kartu masuk ke layar.
+- Kartu bertumpuk.
+- Kartu bergerak saat rolling.
+- Kartu aktif berganti.
+- Kartu terangkat ketika dipilih.
+- Kartu dibatalkan.
+- Kartu bergerak menuju kartu utama.
+- Kartu benar dipasangkan.
+- Kartu salah kembali ke posisi semula.
+- Deck dikunci setelah ronde selesai.
+- Deck direset pada ronde berikutnya.
+
+Gunakan animasi yang responsif terhadap input pengguna. Jangan menjalankan animasi panjang yang menghambat peserta mencari kartu.
+
+### 8.3 Animasi Umpan Balik
+
+Jika jawaban benar:
+- Kartu bergerak menuju tengah.
+- Kedua kartu mendapat outline yang menyala.
+- Muncul efek bintang atau konfeti 2D.
+- Tampilkan pesan “Hebat! BESAR berlawanan dengan KECIL!”
+- Skor pemenang bertambah secara animatif.
+- Tampilkan indikator pemenang ronde.
+
+Jika jawaban salah:
+- Kartu melakukan shake ringan.
+- Tampilkan pesan “Belum tepat, coba lagi!”
+- Jangan memberikan efek yang mempermalukan peserta.
+- Berikan kesempatan kepada peserta lain untuk melanjutkan.
+
+Jika waktu habis:
+- Timer berhenti.
+- Tampilkan pesan “Waktu habis!”
+- Kedua deck dikunci.
+- Lanjutkan ke hasil ronde.
+
+### 8.4 Animasi Lingkungan
+
+Tambahkan elemen dekoratif yang bergerak perlahan, seperti:
+- Bintang kecil.
+- Bentuk geometris.
+- Partikel ringan.
+- Efek latar bergerak.
+- Transisi antarhalaman.
+
+Jangan membuat animasi latar terlalu ramai atau mengganggu keterbacaan kartu.
+
+### 8.5 Efek Suara
+
+Sediakan suara opsional untuk:
+- Mulai ronde.
+- Rolling kartu.
+- Pemilihan kartu.
+- Jawaban benar.
+- Jawaban salah.
+- Kemenangan ronde.
+- Permainan selesai.
+
+Tambahkan kontrol suara dan musik latar. Semua suara harus dapat dimatikan.
+
+Jangan memutar audio secara otomatis sebelum ada interaksi pengguna jika browser membatasi autoplay.
+
+---
+
+## 9. HALAMAN DAN ALUR APLIKASI
+
+### Halaman 1 — Menu Utama
+
+Tampilkan:
+- Judul Game Kartu Oposisi.
+- Ilustrasi kartu yang bergerak.
+- Tombol Mulai Bermain.
+- Tombol Cara Bermain.
+- Tombol Pengaturan.
+- Animasi latar yang ringan.
+
+### Halaman 2 — Persiapan Peserta
+
+Sediakan:
+- Input nama Peserta 1.
+- Input nama Peserta 2.
+- Pilihan avatar.
+- Pilihan tingkat kesulitan.
+- Pilihan jumlah ronde.
+- Pengaturan durasi ronde.
+- Pengaturan suara.
+- Tombol Mulai Pertandingan.
+
+Validasi input nama agar tidak kosong, dengan nama default jika diperlukan.
+
+### Halaman 3 — Tutorial
+
+Jelaskan mekanisme melalui animasi singkat:
+1. Lihat kartu utama.
+2. Roll tumpukan kartu milikmu.
+3. Temukan kata oposisi.
+4. Pilih kartu yang benar.
+5. Pasangkan kartu ke kartu utama.
+6. Jawaban benar tercepat memenangkan ronde.
+
+Sediakan tombol Lewati Tutorial.
+
+### Halaman 4 — Permainan
+
+Implementasikan semua mekanisme tiga area, rolling manual, pemilihan kartu, konfirmasi jawaban, timer, skor, dan animasi.
+
+### Halaman 5 — Hasil Ronde
+
+Tampilkan:
+- Pemenang ronde.
+- Kata utama.
+- Kata oposisi yang benar.
+- Jawaban kedua peserta jika relevan.
+- Skor setelah ronde.
+- Tombol Ronde Berikutnya.
+
+### Halaman 6 — Hasil Akhir
+
+Tampilkan:
+- Nama pemenang.
+- Skor akhir kedua peserta.
+- Total kemenangan ronde.
+- Jumlah jawaban benar dan salah.
+- Ringkasan hasil permainan.
+- Tombol Main Lagi.
+- Tombol Kembali ke Menu.
+
+Jika skor akhir sama, tampilkan hasil seri dengan animasi yang sesuai.
+
+---
+
+## 10. PENGATURAN PERMAINAN
+
+Sediakan pengaturan:
+- Jumlah ronde.
+- Durasi menjawab.
+- Tingkat kesulitan.
+- Poin jawaban benar.
+- Izin mencoba kembali setelah jawaban salah.
+- Efek suara.
+- Musik latar.
+- Kecepatan animasi.
+- Pilihan avatar.
+- Nama peserta.
+
+Contoh konfigurasi:
+
+```ts
+type GameSettings = {
+  totalRounds: number;
+  answerDuration: number;
+  pointsPerCorrectAnswer: number;
+  allowRetryAfterWrongAnswer: boolean;
+  soundEnabled: boolean;
+  musicEnabled: boolean;
+  animationSpeed: "slow" | "normal" | "fast";
+};
+```
+
+Nilai awal yang direkomendasikan:
+- Jumlah ronde: 10.
+- Durasi menjawab: 15 detik.
+- Poin jawaban benar: 10.
+- Percobaan ulang setelah salah: aktif.
+- Suara: aktif setelah interaksi pengguna.
+- Kecepatan animasi: normal.
+
+Semua pengaturan harus benar-benar memengaruhi permainan.
+
+---
+
+## 11. TEKNOLOGI YANG DIREKOMENDASIKAN
+
+Jika proyek belum memiliki teknologi yang ditentukan, gunakan:
+
+- Next.js dengan App Router.
+- React.
+- TypeScript.
+- Tailwind CSS.
+- Framer Motion atau GSAP untuk animasi.
+- CSS transforms dan keyframes untuk gerakan kartu.
+- Lucide Icons untuk ikon antarmuka.
+
+Jangan menggunakan Three.js, React Three Fiber, atau teknologi 3D karena visual yang diinginkan adalah 2D.
+
+Jika proyek sudah tersedia, audit terlebih dahulu stack yang digunakan. Pertahankan teknologi yang masih sesuai dan jangan melakukan migrasi besar tanpa alasan teknis.
+
+### Arsitektur Komponen
+
+Pisahkan komponen berdasarkan tanggung jawab:
+
+```text
+src/
+├── app/
+│   ├── page.tsx
+│   └── game/
+│       └── page.tsx
+├── components/
+│   ├── game/
+│   │   ├── GameBoard.tsx
+│   │   ├── MainCard.tsx
+│   │   ├── PlayerArea.tsx
+│   │   ├── CardDeck.tsx
+│   │   ├── RollingCard.tsx
+│   │   ├── CardControls.tsx
+│   │   ├── CountdownOverlay.tsx
+│   │   ├── GameTimer.tsx
+│   │   ├── ScoreBoard.tsx
+│   │   ├── RoundResult.tsx
+│   │   └── GameOverScreen.tsx
+│   └── ui/
+├── data/
+│   └── opposite-cards.ts
+├── hooks/
+│   └── use-opposite-game.ts
+├── lib/
+│   ├── game-engine.ts
+│   ├── card-shuffle.ts
+│   └── opposite-validation.ts
+└── types/
+    └── game.ts
+```
+
+Struktur ini adalah rekomendasi. Sesuaikan dengan proyek yang sudah ada tanpa membuat duplikasi komponen.
+
+---
+
+## 12. STATE MACHINE DAN LOGIKA PERMAINAN
+
+Gunakan state machine atau pengelolaan state yang setara agar alur permainan dapat dikontrol dengan jelas.
+
+Contoh fase:
+
+```ts
+type GamePhase =
+  | "ready"
+  | "countdown"
+  | "playing"
+  | "submitting"
+  | "resolving"
+  | "round-result"
+  | "game-over";
+```
+
+Pada fase `playing`, peserta boleh melakukan rolling, memilih kartu, membatalkan pilihan, dan mengirim jawaban sesuai aturan.
+
+State minimal yang perlu dikelola:
+- Fase permainan.
+- Ronde aktif.
+- Kartu utama.
+- Deck Peserta 1.
+- Deck Peserta 2.
+- Indeks kartu aktif masing-masing peserta.
+- Kartu yang sedang dipilih.
+- Status pengiriman jawaban setiap peserta.
+- Waktu mulai ronde.
+- Batas waktu.
+- Waktu konfirmasi jawaban.
+- Skor.
+- Riwayat hasil ronde.
+- Status jeda.
+- Pengaturan permainan.
+
+Ketentuan teknis:
+- Rolling tidak boleh mengubah urutan deck yang sudah disiapkan.
+- Setiap input harus mengubah state yang sesuai.
+- Peserta hanya dapat mengirim kartu yang sedang aktif dan telah dipilih.
+- Jawaban hanya diproses sekali.
+- Jawaban yang terlambat tidak boleh mengubah hasil.
+- Timer harus dibersihkan ketika ronde berganti atau permainan dihentikan.
+- Animasi tidak boleh menjadi satu-satunya sumber kebenaran state.
+- State game menjadi sumber kebenaran bagi seluruh tampilan.
+
+Untuk adu cepat, tetapkan satu titik keputusan yang konsisten saat jawaban diterima. Jika dua jawaban tiba hampir bersamaan, proses berdasarkan urutan penerimaan yang tercatat dan terapkan aturan hasil yang sama setiap kali.
+
+---
+
+## 13. RESPONSIVITAS DAN AKSESIBILITAS
+
+Game harus berjalan pada:
+- Desktop.
+- Laptop.
+- Proyektor kelas.
+- Layar interaktif.
+- Tablet.
+- Ponsel.
+
+Pada layar desktop, pertahankan area kiri, tengah, dan kanan dalam satu baris.
+
+Pada layar kecil:
+- Pertahankan kartu utama agar tetap mudah terlihat.
+- Atur ulang ukuran kartu dan area peserta.
+- Hindari tombol yang terlalu kecil.
+- Sediakan kontrol rolling yang mudah disentuh.
+- Jangan bergantung pada hover.
+- Pastikan kedua peserta tetap memiliki area interaksi masing-masing.
+
+Gunakan ukuran font yang mudah dibaca dari jarak pandang kelas.
+
+Hormati pengaturan `prefers-reduced-motion` dengan mengurangi animasi yang tidak penting jika pengguna memilih pengurangan gerakan.
+
+Pastikan kontras teks cukup dan status kartu tidak hanya dibedakan menggunakan warna.
+
+---
+
+## 14. PERFORMA DAN PENYIMPANAN
+
+Versi pertama harus berjalan tanpa backend atau database.
+
+Gunakan state lokal browser untuk:
+- Data permainan aktif.
+- Skor.
+- Ronde.
+- Pilihan kartu.
+- Hasil akhir.
+
+Jangan meminta login atau koneksi internet untuk memulai permainan.
+
+Gunakan aset ilustrasi yang ringan dan dapat dimuat secara lokal jika memungkinkan.
+
+Optimalkan:
+- Animasi kartu.
+- Rendering komponen.
+- Penggunaan gambar.
+- Pembersihan timer.
+- Penanganan input.
+- Pergantian ronde.
+
+Hindari efek yang menyebabkan layout bergeser, frame drop, atau keterlambatan input.
+
+Jika aset eksternal tidak tersedia, gunakan ilustrasi lokal, SVG, atau aset placeholder yang konsisten. Jangan membuat URL gambar palsu.
+
+---
+
+## 15. PENGUJIAN WAJIB
+
+Sebelum menyatakan proyek selesai, uji skenario berikut:
+
+1. Game dapat dimulai dari menu utama.
+2. Nama dan pengaturan peserta dapat digunakan.
+3. Kartu utama tampil dengan benar.
+4. Kedua deck diacak secara independen pada setiap ronde.
+5. Peserta 1 dapat me-roll deck tanpa memengaruhi Peserta 2.
+6. Peserta 2 dapat me-roll deck tanpa memengaruhi Peserta 1.
+7. Scroll, tombol kontrol, dan swipe bekerja sesuai perangkat.
+8. Kartu aktif sesuai dengan indeks deck.
+9. Kartu dapat dipilih setelah ditemukan.
+10. Pilihan dapat dibatalkan sebelum konfirmasi.
+11. Jawaban tidak dinilai hanya karena kartu dipilih.
+12. Jawaban baru dinilai setelah tindakan konfirmasi.
+13. Jawaban benar memenangkan ronde sesuai aturan adu cepat.
+14. Jawaban salah tidak memberikan poin.
+15. Peserta lain tetap memiliki kesempatan setelah jawaban salah.
+16. Timer berakhir dengan benar.
+17. Tidak ada skor ganda akibat klik berulang.
+18. Kedua deck terkunci setelah ronde selesai.
+19. Ronde berikutnya dimulai dengan data dan urutan yang benar.
+20. Skor akhir sesuai dengan seluruh hasil ronde.
+21. Main Lagi mengatur ulang sesi dengan benar.
+22. Tidak ada timer atau event handler lama yang memengaruhi ronde berikutnya.
+23. Seluruh animasi berjalan baik pada perangkat yang didukung.
+24. Tampilan responsif pada desktop, tablet, dan ponsel.
+
+---
+
+## 16. TAHAPAN PENGEMBANGAN
+
+Kerjakan secara bertahap. Jangan langsung membangun semua komponen sekaligus tanpa memvalidasi mekanisme utama.
+
+### Tahap 1 — Audit dan Perencanaan
+Audit struktur proyek, stack, komponen yang sudah ada, dan kebutuhan implementasi. Tentukan file yang perlu dibuat atau diubah.
+
+### Tahap 2 — Layout Permainan
+Bangun tiga area utama, kartu tengah, area peserta, skor, dan kontrol permainan.
+
+### Tahap 3 — Rolling Deck
+Implementasikan tumpukan kartu yang dapat di-scroll, di-swipe, dan dikontrol dengan tombol. Pastikan rolling manual berfungsi sebelum menambahkan animasi kompleks.
+
+### Tahap 4 — Pemilihan dan Validasi
+Implementasikan pilih kartu, batalkan pilihan, pasangkan kartu, dan validasi pasangan oposisi.
+
+### Tahap 5 — Adu Cepat
+Implementasikan hitung mundur, timer, pencatatan waktu konfirmasi, penentuan pemenang ronde, dan pencegahan skor ganda.
+
+### Tahap 6 — Animasi Penuh
+Tambahkan animasi rolling, kartu terpilih, perpindahan kartu, jawaban benar atau salah, skor, dan hasil ronde.
+
+### Tahap 7 — Menu dan Hasil Akhir
+Implementasikan halaman pembuka, pengaturan peserta, tutorial, hasil ronde, dan hasil akhir.
+
+### Tahap 8 — Pengujian
+Jalankan TypeScript check, lint, build, dan pengujian fungsional yang tersedia. Perbaiki semua kesalahan yang ditemukan sebelum melanjutkan.
+
+Setelah setiap tahap, berikan ringkasan file yang dibuat atau diubah, fitur yang sudah berfungsi, dan hal yang masih perlu dikerjakan.
+
+Jangan mengulang pekerjaan yang sudah benar. Pertahankan kode yang sudah sesuai dan lakukan perubahan secara terarah.
+
+---
+
+## 17. KRITERIA KEBERHASILAN AKHIR
+
+Proyek dianggap selesai jika:
+
+- Game memiliki desain 2D dengan animasi yang halus dan menarik.
+- Area kiri untuk Peserta 1, area tengah untuk kartu utama, dan area kanan untuk Peserta 2.
+- Setiap peserta mempunyai deck kartu yang dapat di-roll secara manual.
+- Kedua peserta dapat mencari kartu oposisi secara bersamaan.
+- Kartu utama tetap terlihat selama pencarian.
+- Peserta harus memilih dan mengonfirmasi kartu sebelum jawaban dinilai.
+- Jawaban benar tercepat mendapatkan poin.
+- Jawaban salah tidak memberikan poin.
+- Timer, skor, pergantian ronde, dan hasil akhir bekerja dengan benar.
+- Semua interaksi berfungsi menggunakan mouse maupun layar sentuh.
+- Tidak ada fitur utama yang hanya berupa animasi palsu.
+- Game dapat dimainkan tanpa backend pada versi pertama.
+- Build berhasil dan tidak ada kesalahan kritis yang diketahui.
+
+## INSTRUKSI AKHIR UNTUK AI CODING AGENT
+
+Mulai dengan mengaudit proyek yang ada. Setelah itu, implementasikan mekanisme permainan secara bertahap dengan rolling manual sebagai fitur utama.
+
+**Jangan mengubah rolling manual menjadi animasi pengacakan otomatis. Jangan menampilkan semua kartu sebagai pilihan statis. Jangan langsung menganggap sentuhan pada kartu sebagai jawaban final.**
+
+Peserta harus mencari jawaban melalui deck miliknya sendiri, memilih kartu yang dianggap benar, kemudian memasangkannya ke kartu utama. Pemenang ronde ditentukan berdasarkan jawaban benar yang dikonfirmasi paling cepat secara sah.
+
+Bangun aplikasi yang benar-benar dapat dimainkan, memiliki kode modular, state yang konsisten, animasi yang menarik, dan logika permainan yang dapat diuji.
+
+Laporkan pekerjaan berdasarkan implementasi nyata, bukan berdasarkan fitur yang baru direncanakan.

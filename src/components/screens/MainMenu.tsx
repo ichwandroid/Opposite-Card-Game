@@ -48,7 +48,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
           </div>
 
           {/* Versus / Arrow indicator */}
-          <div className="z-10 w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 text-white font-black flex items-center justify-center shadow-lg text-lg border-2 border-white animate-bounce">
+          <div className="z-10 w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 text-white font-black flex items-center justify-center shadow-lg text-lg border-2 border-white">
             ↔
           </div>
 
@@ -76,7 +76,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
           English Opposites (Antonim Bahasa Inggris) — Adu Cepat 2 Peserta!
         </p>
         <p className="text-xs sm:text-sm text-slate-500 max-w-md mt-2">
-          Dua peserta saling beradu cepat me-roll tumpukan kartu manual untuk menemukan dan mencocokkan opposites card bahasa Inggris yang benar.
+          Dua peserta saling beradu cepat memilih tumpukan kartu manual untuk menemukan dan mencocokkan opposites card bahasa Inggris yang benar.
         </p>
 
         {/* Action Buttons */}
@@ -114,7 +114,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
           Kosakata SD Terpadu
         </span>
         <span>•</span>
-        <span>Rolling Kartu Manual</span>
+        <span>Memilih Kartu Manual</span>
         <span>•</span>
         <span>Animasi Penuh 2D</span>
       </div>

@@ -179,7 +179,7 @@ export function useOppositeGame() {
 
   // Timer loop for 'playing' phase
   useEffect(() => {
-    if (phase !== 'playing' || isPaused) {
+    if (phase !== 'playing' || isPaused || settings.answerDuration === 0) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -205,7 +205,7 @@ export function useOppositeGame() {
         timerRef.current = null;
       }
     };
-  }, [phase, isPaused]);
+  }, [phase, isPaused, settings.answerDuration]);
 
   // Cute Background Music lifecycle sync during gameplay
   useEffect(() => {

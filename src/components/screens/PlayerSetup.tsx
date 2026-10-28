@@ -216,19 +216,19 @@ export const PlayerSetup: React.FC<PlayerSetupProps> = ({
                 <label className="block text-xs font-bold text-slate-600 mb-1">
                   Durasi Per Ronde:
                 </label>
-                <div className="grid grid-cols-3 gap-1 p-1 bg-white rounded-xl border border-slate-200">
-                  {[10, 15, 20].map((d) => (
+                <div className="grid grid-cols-4 gap-1 p-1 bg-white rounded-xl border border-slate-200">
+                  {[0, 10, 15, 20].map((d) => (
                     <button
                       key={d}
                       type="button"
                       onClick={() => setAnswerDuration(d)}
-                      className={`py-1.5 text-xs font-bold rounded-lg transition-colors ${
+                      className={`py-1.5 text-[11px] font-bold rounded-lg transition-colors truncate px-1 ${
                         answerDuration === d
                           ? 'bg-amber-500 text-white shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
-                      {d}s
+                      {d === 0 ? 'Tanpa Waktu' : `${d}d`}
                     </button>
                   ))}
                 </div>

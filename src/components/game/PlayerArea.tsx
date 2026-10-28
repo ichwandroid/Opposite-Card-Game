@@ -89,19 +89,14 @@ export const PlayerArea: React.FC<PlayerAreaProps> = ({
       </div>
 
       {/* Status Bar */}
-      <div className="my-2 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-1 text-[11px] font-semibold text-slate-600">
-          <Zap className="w-3.5 h-3.5 text-amber-500" />
-          <span>Menang: {player.roundsWon} ronde</span>
-        </div>
-
-        {player.hasAnsweredWrongThisRound && (
+      {player.hasAnsweredWrongThisRound && (
+        <div className="my-2 flex items-center justify-end text-xs">
           <span className="flex items-center gap-1 text-[11px] font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded-full animate-pulse">
             <AlertCircle className="w-3 h-3" />
             Salah, coba lagi!
           </span>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Interactive 2D Rolling Deck */}
       <div className="flex-1 flex items-center justify-center py-1">

@@ -27,8 +27,9 @@ export const MainCard: React.FC<MainCardProps> = ({
   totalTime,
   isResolving,
 }) => {
-  const timePercent = Math.max(0, Math.min(100, (timeLeft / totalTime) * 100));
-  const isUrgent = timeLeft <= 5 && timeLeft > 0;
+  const isUnlimited = totalTime === 0;
+  const timePercent = isUnlimited ? 100 : Math.max(0, Math.min(100, (timeLeft / totalTime) * 100));
+  const isUrgent = !isUnlimited && timeLeft <= 5 && timeLeft > 0;
 
   return (
     <div className="flex flex-col items-center justify-between w-full h-full max-w-sm mx-auto px-2">
@@ -41,12 +42,14 @@ export const MainCard: React.FC<MainCardProps> = ({
           </span>
           <span
             className={`font-mono text-sm px-2 py-0.5 rounded-full ${
-              isUrgent
+              isUnlimited
+                ? 'bg-purple-100 text-purple-700 font-extrabold'
+                : isUrgent
                 ? 'bg-red-100 text-red-600 font-extrabold animate-pulse'
                 : 'bg-slate-100 text-slate-800'
             }`}
           >
-            {timeLeft}s
+            {isUnlimited ? 'Tanpa Batas (∞)' : `${timeLeft}s`}
           </span>
         </div>
 

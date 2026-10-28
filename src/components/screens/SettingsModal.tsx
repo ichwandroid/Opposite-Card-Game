@@ -107,8 +107,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         {/* Duration Config */}
         <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col gap-1.5">
           <div className="text-xs font-bold text-slate-800">Durasi Menjawab Per Ronde</div>
-          <div className="grid grid-cols-3 gap-1.5 pt-1">
-            {[10, 15, 20].map((sec) => (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 pt-1">
+            {[0, 10, 15, 20].map((sec) => (
               <button
                 key={sec}
                 onClick={() => onUpdateSettings({ ...settings, answerDuration: sec })}
@@ -118,7 +118,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
                 }`}
               >
-                {sec} Detik
+                {sec === 0 ? 'Tanpa Waktu' : `${sec} Detik`}
               </button>
             ))}
           </div>

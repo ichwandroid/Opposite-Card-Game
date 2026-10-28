@@ -29,8 +29,8 @@ const SPRING_STIFFNESS = 230;
 const SPRING_DAMPING = 22;
 
 // Spacing offsets for the vertical fanned stack
-const STEP_1 = 78; // Distance to adjacent cards (-1 and +1)
-const STEP_2 = 144; // Distance to outer cards (-2 and +2)
+const STEP_1 = 58; // Distance to adjacent cards (-1 and +1)
+const STEP_2 = 105; // Distance to outer cards (-2 and +2)
 
 export const RollingDeck: React.FC<RollingDeckProps> = ({
   playerId,
@@ -396,8 +396,6 @@ export const RollingDeck: React.FC<RollingDeckProps> = ({
   // Visible slots in the vertical fanned stack
   const baseCenterIndex = Math.round(animPos);
   const visibleOffsets = [-2, -1, 0, 1, 2];
-  const activeNormalizedIndex =
-    ((baseCenterIndex % deck.length) + deck.length) % deck.length;
 
   // Calculate clean non-intersecting vertical displacement
   const getDisplacementY = (delta: number) => {
@@ -420,48 +418,14 @@ export const RollingDeck: React.FC<RollingDeckProps> = ({
     <div
       ref={containerRef}
       onWheel={handleWheel}
-      className="flex flex-col items-center justify-between w-full h-full max-w-xs mx-auto select-none touch-none"
+      className="flex flex-col items-center justify-center w-full h-full max-w-xs mx-auto select-none touch-none"
     >
-      {/* Deck Quick Browser Header: Allows easy 1-tap cycling through all cards */}
-      <div className="relative z-50 w-full flex items-center justify-between px-3 py-1.5 bg-white/95 backdrop-blur-md rounded-xl border border-slate-200/90 shadow-sm mb-2">
-        <div className="flex items-center gap-1.5">
-          <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
-            Tumpukan:
-          </span>
-          <span className="font-mono text-xs font-black text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md">
-            {activeNormalizedIndex + 1} / {deck.length}
-          </span>
-        </div>
-
-        {/* Compact, stylish roll buttons */}
-        <div className="flex items-center gap-1">
-          <button
-            onClick={() => rollBy(-1)}
-            disabled={isDisabled || isSubmitting}
-            title="Lihat kartu sebelumnya"
-            className={`flex items-center gap-0.5 px-2 py-1 rounded-lg border text-[11px] font-bold shadow-2xs transition-all ${playerTheme.navBtn}`}
-          >
-            <ChevronUp className="w-3.5 h-3.5" />
-            <span>Atas</span>
-          </button>
-          <button
-            onClick={() => rollBy(1)}
-            disabled={isDisabled || isSubmitting}
-            title="Lihat kartu berikutnya"
-            className={`flex items-center gap-0.5 px-2 py-1 rounded-lg border text-[11px] font-bold shadow-2xs transition-all ${playerTheme.navBtn}`}
-          >
-            <span>Bawah</span>
-            <ChevronDown className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
-
       {/* Clean Vertical Fanned Stack Stage */}
       <div
         style={{
           cursor: isRollingDragRef.current ? 'grabbing' : isCardLifted ? 'grabbing' : 'grab',
         }}
-        className="relative z-10 w-full h-[410px] sm:h-[440px] pt-4 my-auto flex items-center justify-center overflow-visible select-none [perspective:900px]"
+        className="relative z-10 w-full h-[360px] sm:h-[390px] pt-2 my-auto flex items-center justify-center overflow-visible select-none [perspective:900px]"
       >
         {/* Soft background ambient halo matching player color */}
         <div
@@ -534,7 +498,7 @@ export const RollingDeck: React.FC<RollingDeckProps> = ({
                   : 'pointer',
                 willChange: 'transform, opacity, box-shadow',
               }}
-              className={`absolute w-[245px] sm:w-[265px] h-[290px] sm:h-[310px] rounded-xl border-3 flex flex-col justify-between p-3 select-none bg-white overflow-hidden transition-colors duration-150 ${
+              className={`absolute w-[230px] sm:w-[245px] h-[250px] sm:h-[270px] rounded-xl border-3 flex flex-col justify-between p-2.5 select-none bg-white overflow-hidden transition-colors duration-150 ${
                 isCenter
                   ? `${playerTheme.activeBorder} ${playerTheme.activeGlow} hover:scale-[1.015]`
                   : 'border-slate-200/90 shadow-md hover:border-slate-300 hover:scale-[0.82]'

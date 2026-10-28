@@ -2,6 +2,7 @@ import React from 'react';
 import { Play, HelpCircle, Settings, Sparkles, BookOpen } from 'lucide-react';
 import { CardIllustration } from '../ui/CardIllustration';
 import { GameCardFrameDecor } from '../ui/CardOrnament';
+import { sound } from '../../utils/soundEngine';
 
 interface MainMenuProps {
   onStartGame: () => void;
@@ -82,7 +83,10 @@ export const MainMenu: React.FC<MainMenuProps> = ({
         {/* Action Buttons */}
         <div className="w-full max-w-xs flex flex-col gap-3 mt-8">
           <button
-            onClick={onStartGame}
+            onClick={() => {
+              sound.playCustom();
+              onStartGame();
+            }}
             className="w-full py-4 px-6 rounded-2xl font-black text-base bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-600 text-white shadow-xl hover:shadow-2xl active:scale-98 transition-all flex items-center justify-center gap-2 group"
           >
             <Play className="w-5 h-5 fill-white transition-transform group-hover:scale-110" />

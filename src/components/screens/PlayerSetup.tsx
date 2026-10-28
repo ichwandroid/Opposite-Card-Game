@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GameSettings } from '../../types/game';
 import { AVATAR_OPTIONS } from '../../data/oppositeCards';
 import { ArrowLeft, Play, Sparkles, User, Settings2 } from 'lucide-react';
+import { sound } from '../../utils/soundEngine';
 
 interface PlayerSetupProps {
   initialP1Name: string;
@@ -270,6 +271,7 @@ export const PlayerSetup: React.FC<PlayerSetupProps> = ({
           {/* Submit CTA */}
           <button
             type="submit"
+            onClick={() => sound.playCustom()}
             className="w-full py-4 px-6 rounded-2xl font-black text-base bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-600 text-white shadow-xl hover:shadow-2xl active:scale-98 transition-all flex items-center justify-center gap-2"
           >
             <Play className="w-5 h-5 fill-white" />

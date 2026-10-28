@@ -5,6 +5,7 @@ class SoundEngine {
   private musicInterval: number | null = null;
   private masterGain: GainNode | null = null;
   private musicGain: GainNode | null = null;
+  private customBuffer: AudioBuffer | null = null;
   private musicStep: number = 0;
 
   constructor() {
@@ -29,6 +30,36 @@ class SoundEngine {
     if (this.ctx && this.ctx.state === 'suspended') {
       this.ctx.resume().catch(() => {});
     }
+  }
+
+  private async loadCustomSound() {
+    if (!this.ctx || this.customBuffer) return;
+    try {
+      const response = await fetch('/assets/aistudio/mixkit-bonus-extra-in-a-video-game-2064_dab1ab29.wav');
+      const arrayBuffer = await response.arrayBuffer();
+      this.customBuffer = await this.ctx.decodeAudioData(arrayBuffer);
+    } catch (e) {
+      console.error('Error loading custom sound:', e);
+    }
+  }
+
+  public async playCustom() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx || !this.masterGain) return;
+    
+    if (!this.customBuffer) {
+      await this.loadCustomSound();
+    }
+    
+    if (!this.customBuffer) return;
+
+    try {
+      const source = this.ctx.createBufferSource();
+      source.buffer = this.customBuffer;
+      source.connect(this.masterGain);
+      source.start();
+    } catch {}
   }
 
   public setMuted(muted: boolean) {
@@ -74,9 +105,7 @@ class SoundEngine {
 
       osc.start(now);
       osc.stop(now + 0.05);
-    } catch {
-      // Audio fallback silent
-    }
+    } catch {}
   }
 
   public playSelect() {

@@ -111,7 +111,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
       <div className="pb-4 flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-slate-500">
         <span className="flex items-center gap-1">
           <BookOpen className="w-4 h-4 text-blue-500" />
-          Kosakata SD Terpadu
+          SD Anak Saleh
         </span>
         <span>•</span>
         <span>Memilih Kartu Manual</span>

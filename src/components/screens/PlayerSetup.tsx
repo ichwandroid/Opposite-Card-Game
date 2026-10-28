@@ -228,7 +228,7 @@ export const PlayerSetup: React.FC<PlayerSetupProps> = ({
                           : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
-                      {d === 0 ? 'Tanpa Waktu' : `${d}d`}
+                      {d === 0 ? '0d' : `${d}d`}
                     </button>
                   ))}
                 </div>

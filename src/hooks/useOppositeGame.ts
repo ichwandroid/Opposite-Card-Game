@@ -256,7 +256,7 @@ export function useOppositeGame() {
     (playerId: 'p1' | 'p2', card: OppositeCard) => {
       if (phase !== 'playing') return; // Strict lock against late submissions
 
-      const isCorrect = card.id === targetOpposite.id;
+      const isCorrect = card.oppositeId === mainCard.id;
 
       if (isCorrect) {
         // Correct answer! First valid submission wins the round!

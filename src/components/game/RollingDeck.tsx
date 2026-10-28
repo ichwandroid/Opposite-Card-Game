@@ -118,7 +118,9 @@ export const RollingDeck: React.FC<RollingDeckProps> = ({
   const lastWheelTime = useRef<number>(0);
 
   // Active card
-  const activeCard = deck[activeIndex] || deck[0];
+  const normalizedIndex =
+    ((Math.round(animPos) % deck.length) + deck.length) % deck.length;
+  const activeCard = deck[normalizedIndex];
 
   // Sync target when activeIndex changes externally
   useEffect(() => {
